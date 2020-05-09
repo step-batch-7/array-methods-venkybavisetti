@@ -41,3 +41,13 @@ Array *filter(Array *src, Predicate predicate)
   }
   return create_Array_from(filtered_nums, count);
 }
+
+int reduce(Array *src, int init, Reducer reducer)
+{
+  for (int i = 0; i < src->length; i++)
+  {
+    init = (*reducer)(init, src->array[i]);
+  }
+
+  return init;
+}
