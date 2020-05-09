@@ -7,6 +7,12 @@ int square(int num)
   return num * num;
 }
 
+Bool is_even(int num)
+{
+  return num % 2 == 0;
+  ;
+}
+
 void display_Array(Array *array)
 {
   for (int i = 0; i < array->length; i++)
@@ -27,4 +33,5 @@ int main(void)
   input_array->array[3] = 4;
   display_Array(input_array);
   display_Array(map(input_array, &square));
+  display_Array(filter(input_array, &is_even));
 }
