@@ -2,6 +2,18 @@
 #include <stdlib.h>
 #include "array.h"
 
+Array *create_Array_from(int *values, int length)
+{
+  Array *array = (Array *)malloc(sizeof(Array));
+  array->array = (int *)malloc(sizeof(int) * length);
+  array->length = length;
+  for (int i = 0; i < array->length; i++)
+  {
+    array->array[i] = values[i];
+  }
+  return array;
+}
+
 Array *map(Array *src, Mapper mapper)
 {
 
@@ -13,18 +25,6 @@ Array *map(Array *src, Mapper mapper)
     new_array->array[i] = (*mapper)(src->array[i]);
   }
   return new_array;
-}
-
-Array *create_Array_from(int *values, int length)
-{
-  Array *array = (Array *)malloc(sizeof(Array));
-  array->array = (int *)malloc(sizeof(int) * length);
-  array->length = length;
-  for (int i = 0; i < array->length; i++)
-  {
-    array->array[i] = values[i];
-  }
-  return array;
 }
 
 Array *filter(Array *src, Predicate predicate)
