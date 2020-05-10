@@ -56,6 +56,12 @@ Bool is_odd(Object value)
   return *(int *)value % 2 == 1;
 }
 
+Object product(Object product, Object value)
+{
+  *(int *)product = (*(int *)product) * (*(int *)value);
+  return product;
+}
+
 int main(void)
 {
   Array *input_array = malloc(sizeof(Array));
@@ -90,4 +96,14 @@ int main(void)
 
   printf("\nvoid odd numbers\n");
   display_ArrayVoid(filter_void(intput_void_array, &is_odd), display_integer);
+
+  printf("\nvoid product of numbers\n");
+  Object initial_context, product_of_numbers;
+  int context = 1;
+  initial_context = &context;
+  product_of_numbers = reduce_void(intput_void_array, initial_context, &product);
+  display_integer(product_of_numbers);
+  printf("\n");
+
+  return 0;
 }
