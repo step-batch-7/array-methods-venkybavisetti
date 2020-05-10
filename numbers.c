@@ -51,6 +51,11 @@ Object square_void(Object value)
   return integer;
 }
 
+Bool is_odd(Object value)
+{
+  return *(int *)value % 2 == 1;
+}
+
 int main(void)
 {
   Array *input_array = malloc(sizeof(Array));
@@ -82,4 +87,7 @@ int main(void)
 
   printf("\nvoid squares\n");
   display_ArrayVoid(map_void(intput_void_array, &square_void), display_integer);
+
+  printf("\nvoid odd numbers\n");
+  display_ArrayVoid(filter_void(intput_void_array, &is_odd), display_integer);
 }

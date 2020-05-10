@@ -12,3 +12,26 @@ ArrayVoid_ptr map_void(ArrayVoid_ptr src, MapperVoid mapper)
   }
   return new_array;
 }
+
+ArrayVoid_ptr filter_void(ArrayVoid_ptr src, PredicateVoid predicate)
+{
+  Object filtered_values[src->length];
+  int count = 0;
+  for (int i = 0; i < src->length; i++)
+  {
+    if ((*predicate)(src->array[i]))
+    {
+      filtered_values[count] = src->array[i];
+      count++;
+    }
+  }
+
+  ArrayVoid_ptr array = (ArrayVoid_ptr)malloc(sizeof(ArrayVoid));
+  array->array = (Object *)malloc(sizeof(Object) * count);
+  array->length = count;
+  for (int i = 0; i < array->length; i++)
+  {
+    array->array[i] = filtered_values[i];
+  }
+  return array;
+}
