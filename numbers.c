@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "array.h"
+#include "./array.h"
+#include "array_void.h"
+
+typedef void (*DisplayData)(Object);
 
 int square(int num)
 {
@@ -10,7 +13,6 @@ int square(int num)
 Bool is_even(int num)
 {
   return num % 2 == 0;
-  ;
 }
 
 int sum(int total, int num)
@@ -25,6 +27,28 @@ void display_Array(Array *array)
     printf("%d ", array->array[i]);
   }
   printf("\n");
+}
+
+//void display_ArrayVoid(ArrayVoid *array,void (*displayer)(Object))
+void display_ArrayVoid(ArrayVoid *array, DisplayData displayer)
+{
+  for (int i = 0; i < array->length; i++)
+  {
+    (*displayer)(array->array[i]);
+  }
+  printf("\n");
+}
+
+void display_integer(Object value)
+{
+  printf("%d ", *(int *)value);
+}
+
+Object square_void(Object value)
+{
+  Object integer = malloc(sizeof(Object));
+  *(int *)integer = (*(int *)value) * (*(int *)value);
+  return integer;
 }
 
 int main(void)
@@ -44,4 +68,18 @@ int main(void)
   display_Array(filter(input_array, &is_even));
   printf("\nsum of n nums\n");
   printf("%d\n", reduce(input_array, 0, &sum));
+
+  ArrayVoid_ptr intput_void_array = malloc(sizeof(ArrayVoid));
+  intput_void_array->array = malloc(sizeof(Object) * 4);
+  intput_void_array->length = 4;
+  int values[] = {1, 2, 3, 4};
+  for (int i = 0; i < intput_void_array->length; i++)
+  {
+    intput_void_array->array[i] = &values[i];
+  }
+  printf("\nvoid input\n");
+  display_ArrayVoid(intput_void_array, display_integer);
+
+  printf("\nvoid squares\n");
+  display_ArrayVoid(map_void(intput_void_array, &square_void), display_integer);
 }
